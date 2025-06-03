@@ -1,0 +1,24 @@
+Package: omicschart
+Type: Package
+Title: OmicsChart PREON Utilities
+Version: 0.1.0
+Authors@R: c(
+    person(
+      "Tanya", "Aneichyk",
+      email = "tanya@omicschart.com",
+      role = c("aut", "cre")
+    )
+  )
+Description: Use this package to share interactive results with your peers,
+    collect their feedback and make adjustments based on that feedback.
+License: Distributed under terms of the MIT license.
+Encoding: UTF-8
+Imports:
+    httr,
+    jsonlite,
+    askpass,
+    magick,
+    htmlwidgets,
+    webshot2,
+    listviewer
+RoxygenNote: 7.3.2
