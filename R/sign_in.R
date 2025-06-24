@@ -42,7 +42,8 @@ sign_in <- function(email) {
     email = email,
     access_token = content$access_token,
     refresh_token = content$refresh_token,
-    expires_at = Sys.time() + 3600
+    expires_at = Sys.time() + 3600,
+    active_project_name = content$active_project_name
   )
 
   dir.create(tools::R_user_dir("omicschart", "config"), recursive = TRUE, showWarnings = FALSE)

@@ -1,2 +1,4 @@
 *.RProj
 .R*
+.Rproj.user
+test_code.R

@@ -18,7 +18,7 @@ share_graph <- function(
   public = FALSE,
   project = "My Workspace",
   description = "",
-  dims = c(900, 600)
+  dims = c(800, 400)
 ) {
 
   if (!requireNamespace("httr", quietly = TRUE)) stop("Please install 'httr'")
@@ -33,51 +33,9 @@ share_graph <- function(
   )
 
   if (!is.null(graph)) {
-
-    if (inherits(graph, "gg")) {
-      # ggplot, saving to file to be converted to base64 string
-
-      plot_list$library = 'image'
-      plot_list$component = 'img'
-      tmp_image_file <- tempfile(fileext = ".png")
-      ggplot2::ggsave(
-        tmp_image_file,
-        plot = graph,
-        width = dims[1],
-        height = dims[2],
-        units = 'px',
-        dpi = 72
-      )
-      plot_list$component_props$src <- paste0(
-        "data:image/png;base64,",
-        base64enc::base64encode(tmp_image_file)
-      )
-      preview_base64 <- create_base64_preview_from_png(tmp_image_file)
-      unlink(tmp_image_file)
-
-    } else if (inherits(graph, "plotly")) {
-      # plotly, saving as plotly json
-      plot_list$library = 'plotly'
-      plot_list$component = 'Plot'
-      plot_list$component_props = jsonlite::fromJSON(plotly::plotly_json(graph, FALSE))
-      preview_base64 <- create_base64_preview_from_plotly(graph)
-    } else if (is.function(graph)) {
-      # if a function for a base R plot, save to file
-      plot_list$library = 'image'
-      plot_list$component = 'img'
-      tmp_image_file <- tempfile(fileext = ".png")
-      grDevices::png(tmp_image_file)
-        graph()
-      grDevices::dev.off()
-      plot_list$component_props$src <- paste0(
-        "data:image/png;base64,",
-        base64enc::base64encode(tmp_image_file)
-      )
-      preview_base64 <- create_base64_preview_from_png(tmp_image_file)
-      unlink(tmp_image_file)
-    } else {
-      stop("Unsupported plot type. Must be a ggplot, plotly, or a base R plot function.")
-    }
+    ocplot_and_preview_list <- generate_ocplot_and_preview_from_r_plot(graph, dims)
+    plot_list <- ocplot_and_preview_list$ocplot
+    preview_base64 <- ocplot_and_preview_list$preview_base64
   } else {
     # if graph is NULL, capture the last image from plot panel
     tryCatch({
@@ -108,7 +66,7 @@ share_graph <- function(
     encode = "json",
     body = list(
       email = auth_config$email,
-      plot = plot_list,
+      ocplot = plot_list,
       description = description,
       public = public,
       project = project,
