@@ -48,7 +48,7 @@ modify_graph <- function(
       plot = ocplot_and_preview_list$ocplot,
       description = description,
       public = public,
-      project = project,
+      project_name = project_name,
       dims = as.list(dims),
       preview_base64 = ocplot_and_preview_list$preview_base64
     ),
