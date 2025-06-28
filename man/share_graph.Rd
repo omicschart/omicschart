@@ -9,7 +9,7 @@ share_graph(
   public = FALSE,
   project = "My Workspace",
   description = "",
-  dims = c(900, 600)
+  dims = c(800, 400)
 )
 }
 \arguments{
