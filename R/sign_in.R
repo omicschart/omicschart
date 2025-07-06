@@ -43,6 +43,7 @@ sign_in <- function(email) {
     access_token = content$access_token,
     refresh_token = content$refresh_token,
     expires_at = Sys.time() + 3600,
+    organization_name = content$organization_name,
     active_project_name = content$active_project_name
   )
 
