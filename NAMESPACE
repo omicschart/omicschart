@@ -2,6 +2,8 @@
 
 export(list_my_graphs)
 export(modify_graph)
+export(my_session_info)
 export(share_graph)
+export(share_rmd_report)
 export(sign_in)
 export(sign_up)
